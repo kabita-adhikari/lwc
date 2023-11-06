@@ -1,0 +1,5 @@
+project:
+  title: "lwc"
+  type: website
+  output-dir: docs
+
