@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>lwc - Introduction to Data Structures</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#the-need-for-data-structures" id="toc-the-need-for-data-structures" class="nav-link active" data-scroll-target="#the-need-for-data-structures">The need for data structures</a></li>
+  <li><a href="#data-structures" id="toc-data-structures" class="nav-link" data-scroll-target="#data-structures">Data structures</a></li>
+  <li><a href="#the-array" id="toc-the-array" class="nav-link" data-scroll-target="#the-array">The array</a></li>
+  <li><a href="#the-python-sequence" id="toc-the-python-sequence" class="nav-link" data-scroll-target="#the-python-sequence">The Python sequence</a></li>
+  <li><a href="#the-python-for-loop" id="toc-the-python-for-loop" class="nav-link" data-scroll-target="#the-python-for-loop">The Python for loop</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to Data Structures</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="the-need-for-data-structures" class="level1">
+<h1>The need for data structures</h1>
+<p>The algorithms we design to solve problems rarely do so without requiring some sort of input and producing some sort of output. In the process, our algorithms do something with the inputs (e.g., number crunching, processing, and so on). That is, algorithms typically manipulate the inputs in some way. Think about what that means. Where is the information? What does it look like? How is it accessed? How is it manipulated? Where does it go? We generally refer to the inputs being processed and the output(s) being generated as data.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Definition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Data</strong> is a term given to pieces of information that can berepresented, stored, or manipulated using a computer. Often, combining data provides meaning (i.e., information).</p>
+</div>
+</div>
+<p>Although data is useful and necessary, it is not yet meaningful. The idea is that our algorithms will process this data and produce some sort of output (or result). In the process, meaning is given to the data. We call this information.</p>
+</section>
+<section id="data-structures" class="level1">
+<h1>Data structures</h1>
+<p>Data structures have to do with arranging or organizing data in some way. The memory capacity in today’s computers is very large. Within the computer, data is stored in different memory locations. Often, the many pieces of data that our algorithms are dealing with are related in some way. Consequently, there is a need to have this data grouped in some way in memory. This grouping makes manipulation of that data much easier. Think about sorting a list of numbers. It would be much more difficult if the numbers were located randomly in memory. Somehow, we would need to know where each value is located, and that could technically be anywhere! Perhaps it would speed things up if each value was located in consecutive memory locations (i.e., next to each other in memory). We would then only need to know where the first value is located and the total number of values stored.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Definition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>data structure</strong> is a way of organizing data in a computer so that it can be used efficiently.</p>
+</div>
+</div>
+<p>Data structures allow a programmer to arrange pieces of information (data) in a way that makes sense and allows the computer to manipulate the data easily for the programmer’s task. Many times this data is made up of multiple instances of similar pieces of data, and other times it involves different kinds of data that are otherwise related. For example, a word (or a bunch of letters strung together) is made up of multiple pieces of similar data kept together in a specific order. In the case of a word, the letters of the alphabet are the pieces of data, and they have to be kept together in a specific order for it to make sense. Another example is a class roster which is made up of different entries in a specific order corresponding to each student in the class. Each entry is made up of dissimilar data such as the name and the grade on exam 1 of a student.</p>
+</section>
+<section id="the-array" class="level1">
+<h1>The array</h1>
+<p>One of the most commonly used data structures is called the <strong>array</strong>. We will see that many concepts in computer science, and particularly in data structures, are derived from real life examples – and arrays are not an exception. Arrays are comparable to a numbered list – such as a grocery list, a class roster, or a set of numbered drawers. They are used to store multiple instances of anything, as long as they are all of the same kind (i.e., all numbers, all letters, all images, all books, etc). Imagine these things being in some sort of order (i.e., we have a first thing, a last thing, and some number of things in between). The members of (or entries in) the array are called elements.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Definition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An <strong>array</strong> is a collection of similar pieces of data stored in contiguous memory locations. Contiguous memory locations means that the data is stored in memory locations that are next to each other.</p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\img7 (2).png" class="img-fluid figure-img" width="700"></p>
+</figure>
+</div>
+<p>The order in which elements are stored in an array is important. This is because very often a programmer needs to access a specific element of an array, and in order to do that, its position relative to the first element of the array must be known. The position of an element is also referred to as its address, and the relative address (how far away from the first element it is) is called its index. We say that a value is stored at an index of the array.</p>
+<p>The distinction between a <strong>value</strong> and its <strong>index</strong> is one that must be emphasized. In this context, the following definition holds:</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Definition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>value</strong> refers to a piece of data stored in an array, and its <strong>index</strong> is the position in the array where that value is stored. This means the <strong>index</strong> represents where an element is, whereas the <strong>value</strong> represents what the element is.</p>
+</div>
+</div>
+<p>While the two are related, each of them will be of different importance to us depending on the scenario we are trying to solve. For example, if you misplaced your favorite jacket at home, its location would be more important than its value (i.e., its index would be more important than the fact that it is a jacket). In contrast, when you get feedback on a test you did in class, the value of your score is more important. While dealing with arrays, it is important to understand the distinction between index and value.</p>
+</section>
+<section id="the-python-sequence" class="level1">
+<h1>The Python sequence</h1>
+<p>The most basic data structure in Python is the sequence. A <strong>sequence</strong> is composed of (related) elements. Each element in a sequence is assigned an index (or position). A sequence with n elements has indexes 0 to n–1. Pay special attention to this! The first value in a Python sequence is located at index 0, and the nth (i.e., last) value is located at index n–1 . Python has many built-in types of sequences; however, the most popular is called the list. It effectively functions as an array!</p>
+<p>The <strong>list</strong> in Python is quite versatile and is declared using square brackets; for example:</p>
+<pre><code>grades = [ 94, 78, 100, 86 ]</code></pre>
+<p>The statement above declares the list grades with four integers: 94, 78, 100, and 86. The list can be displayed in its entirety (e.g., with the statement print(grades)); however, we can access element individually by its index (specified within brackets). Accessing can mean to read a value in the list, or it can mean to change a value in the list; for example:</p>
+<pre><code>grades[0]
+grades[3] = 87</code></pre>
+<p>Here’s an example of this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> grades <span class="op">=</span> <span class="op">[</span> <span class="dv">94</span><span class="op">,</span> <span class="dv">78</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">86</span> <span class="op">]</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> grades</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">[</span><span class="dv">94</span><span class="op">,</span> <span class="dv">78</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">86</span><span class="op">]</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> grades<span class="op">[</span><span class="dv">0</span><span class="op">]</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dv">94</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> grades<span class="op">[</span><span class="dv">3</span><span class="op">]</span> <span class="op">=</span> <span class="dv">87</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> grades</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="op">[</span><span class="dv">94</span><span class="op">,</span> <span class="dv">78</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">87</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that, in Python, the values within a list do not need to be of the same data type! This is a bit different than lists in most other general purpose programming languages (usually, those languages call their lists <strong>arrays</strong>), in which all elements must be of the same type. Here’s an example of a heterogeneous (meaning diverse) list in Python:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff <span class="op">=</span> <span class="op">[</span> <span class="fl">3.14</span><span class="op">,</span> <span class="fl">2.78</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="st">"100"</span><span class="op">,</span> <span class="st">"the speed of light!"</span> <span class="op">]</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="fl">3.14159</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff<span class="op">[</span><span class="dv">4</span><span class="op">]</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="er">'</span>the speed of light<span class="op">!</span><span class="er">'</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff<span class="op">[</span><span class="dv">4</span><span class="op">]</span> <span class="op">=</span> <span class="st">"the speed of sound!"</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">[</span><span class="fl">3.14159</span><span class="op">,</span> <span class="fl">2.78</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="er">'</span><span class="dv">100</span><span class="er">'</span><span class="op">,</span> <span class="er">'</span>the speed of sound<span class="op">!</span><span class="er">'</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More than one value in a list can be accessed at a time. We can specify a range (or interval) of indexes in the format [lower:upper+1] which means the interval [lower, upper) (i.e., closed at lower and open at upper). That is, the lower index in the range is inclusive but the upper is not. For example:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>stuff<span class="op">[</span><span class="dv">3</span><span class="op">:</span><span class="dv">4</span><span class="op">]</span>      # accesses index <span class="dv">3</span> <span class="op">(</span>the same as stuff<span class="op">[</span><span class="dv">3</span><span class="op">])</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stuff<span class="op">[</span><span class="dv">0</span><span class="op">:</span><span class="dv">5</span><span class="op">]</span>      # accesses indexes <span class="dv">0</span> through <span class="dv">4</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>stuff<span class="op">[-</span><span class="dv">3</span><span class="op">]</span>       # accesses the third index from the right</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here are some examples:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff <span class="op">=</span> <span class="op">[</span> <span class="fl">3.14159</span><span class="op">,</span> <span class="fl">2.78</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="st">"100"</span><span class="op">,</span> <span class="st">"the speed of sound!"</span> <span class="op">]</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff<span class="op">[</span><span class="dv">3</span><span class="op">:</span><span class="dv">4</span><span class="op">]</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">[</span><span class="er">'</span><span class="dv">100</span><span class="er">'</span><span class="op">]</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff<span class="op">[</span><span class="dv">0</span><span class="op">:</span><span class="dv">5</span><span class="op">]</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="op">[</span><span class="fl">3.14159</span><span class="op">,</span> <span class="fl">2.78</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="er">'</span><span class="dv">100</span><span class="er">'</span><span class="op">,</span> <span class="er">'</span>the speed of sound<span class="op">!</span><span class="er">'</span><span class="op">]</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff<span class="op">[-</span><span class="dv">3</span><span class="op">]</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff<span class="op">[-</span><span class="dv">0</span><span class="op">]</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fl">3.14159</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff<span class="op">[-</span><span class="dv">1</span><span class="op">]</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="er">'</span>the speed of sound<span class="op">!</span><span class="er">'</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff<span class="op">[-</span><span class="dv">2</span><span class="op">]</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="er">'</span><span class="dv">100</span><span class="er">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note the difference between the element 100 (a number) at index 2 and the element ‘100’ (a string) at index 3.</p>
+<p>List elements can be deleted with the <strong>del</strong> keyword as follows:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode java code-with-copy"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff <span class="op">=</span> <span class="op">[</span> <span class="fl">3.14159</span><span class="op">,</span> <span class="fl">2.78</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="st">"100"</span><span class="op">,</span> <span class="st">"the speed of sound!"</span> <span class="op">]</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> del stuff<span class="op">[</span><span class="dv">0</span><span class="op">]</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">[</span><span class="fl">2.78</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="er">'</span><span class="dv">100</span><span class="er">'</span><span class="op">,</span> <span class="er">'</span>the speed of sound<span class="op">!</span><span class="er">'</span><span class="op">]</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> del stuff<span class="op">[</span><span class="dv">2</span><span class="op">]</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="op">[</span><span class="fl">2.78</span><span class="op">,</span> <span class="dv">100</span><span class="op">,</span> <span class="er">'</span>the speed of sound<span class="op">!</span><span class="er">'</span><span class="op">]</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> del stuff<span class="op">[</span><span class="dv">2</span><span class="op">]</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> stuff</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="op">[</span><span class="fl">2.78</span><span class="op">,</span> <span class="dv">100</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Python provides several built-in operations that can be performed on lists. Here are many of them:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images\img7 (1).png" class="img-fluid figure-img" width="700"></p>
+</figure>
+</div>
+<p>Note that the word <code>list</code> is just a variable we defined to hold a list and is not a keyword nor anything built-into Python. If, for example, you call your list <code>numbers</code>, then you would write <code>numbers.sort()</code> to sort the values in your list, <code>numbers.append(item)</code> to append the contents of the variable item into your list, and <code>len(numbers)</code> to get the length of your <code>numbers</code> list.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span> <span class="op">=</span> [ <span class="dv">13</span>, <span class="dv">27</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">99</span>, <span class="dv">46</span>, <span class="dv">1</span> ]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>, <span class="dv">27</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">99</span>, <span class="dv">46</span>, <span class="dv">1</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">len</span>(<span class="bu">list</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">max</span>(<span class="bu">list</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="dv">99</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">min</span>(<span class="bu">list</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span>.append(<span class="dv">16</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>, <span class="dv">27</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">99</span>, <span class="dv">46</span>, <span class="dv">1</span>, <span class="dv">16</span>]</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span>.count(<span class="dv">7</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span>.insert(<span class="dv">1</span>, <span class="dv">7</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>, <span class="dv">7</span>, <span class="dv">27</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">99</span>, <span class="dv">46</span>, <span class="dv">1</span>, <span class="dv">16</span>]</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span>.count(<span class="dv">7</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span>.index(<span class="dv">7</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span>.remove(<span class="dv">7</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>, <span class="dv">27</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">99</span>, <span class="dv">46</span>, <span class="dv">1</span>, <span class="dv">16</span>]</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span>.sort()</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">13</span>, <span class="dv">16</span>, <span class="dv">27</span>, <span class="dv">46</span>, <span class="dv">99</span>]</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span>.reverse()</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>[<span class="dv">99</span>, <span class="dv">46</span>, <span class="dv">27</span>, <span class="dv">16</span>, <span class="dv">13</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity 1: : Creating and populating an array (actually, a Python list)">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Activity 1: : Creating and populating an array (actually, a Python list)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>In this activity, you will write a Python program to create a list of 20 random integers.</p>
+<section id="creating-the-list" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-list">Creating the list</h2>
+<p>Create an empty list named numbers using a simple assignment statement:</p>
+<pre><code>    numbers = []</code></pre>
+<p>Currently, the list is empty (i.e., its length is 0). In fact, this can be confirmed using one of the list methods shown above:</p>
+<pre><code>    print(len(numbers))</code></pre>
+</section>
+<section id="populating-the-list-with-random-integers" class="level2">
+<h2 class="anchored" data-anchor-id="populating-the-list-with-random-integers">Populating the list with random integers</h2>
+<p>Let’s populate the list with 20 random integers. While it is possible (albeit tedious) to populate the list by adding each value individually, instead we are going to create a short program to make the population process automated.</p>
+<p>Because the population process calls for a specific task (i.e., the addition of an item to the list) to be repeated over and over again, let’s use the <strong>while</strong> loop with a counter (initialized to 0). Let’s now declare the counter. Note that statements already shown above are included, and new statements are highlighted:</p>
+<pre><code>    numbers = []
+    counter = 0</code></pre>
+<p>Because our task is going to be done 20 times (in order to fill the list with 20 values), we can structure the while loop as follows:</p>
+<pre><code>    numbers = []
+    counter = 0
+    while (counter &lt; 20):
+        # add a random number to the list
+        counter += 1</code></pre>
+<p>Note that the comment (beginning with #) will be replaced later. It is just informative at this point. Notice how the counter is incremented at the end of the while loop. This is necessary because it allows it to progress from 0 to 20, guaranteeing that the condition in the while loop will eventually be false (i.e., counter will be greater than or equal to 20). This stops the repetition, allowing control to continue past the while loop.</p>
+<p>Now, what number will we be actually adding to the list? Well, we want to add 20 randomly selected numbers to the list. To generate random numbers, we can make use of a Python library called <strong>random</strong>; specifically, a function in the library called <strong>randint</strong>. Libraries and how to import them in Python programs will be discussed in more detail in a later lesson. For now, we’ll simply show how to import the randint function from the <strong>random</strong> library:</p>
+<pre><code>    from random import randint
+
+    numbers = []
+    counter = 0
+    while (counter &lt; 20):
+        # add a random number to the list
+        counter += 1</code></pre>
+<p>Next, let’s generate a random integer from 1 to 99:</p>
+<pre><code>    from random import randint
+
+    numbers = []
+    counter = 0
+    while (counter &lt; 20):
+        num = randint(1, 99)
+        counter += 1</code></pre>
+<p>Note that the <strong>randint</strong> function takes two parameters: a lower bound and an upper bound. The function returns a random integer from the lower bound to the upper bound, inclusive. So far, we’ve just generated 20 random numbers from 1 to 99. We’re not actually adding them to the list! Let’s do this now using the <strong>append</strong> list function shown above:</p>
+<pre><code>    from random import randint
+    
+    numbers = []
+    counter = 0
+    while (counter &lt; 20):
+        num = randint(1, 99)
+        numbers.append(num)
+        counter += 1</code></pre>
+<p>You have now created a list (which we called numbers) and filled it with 20 random integers. If any of the following activities require a list filled with random numbers, you can easily refer to the above steps and create one. If you require a larger or smaller array, its just a matter of changing the value in the <strong>while</strong> loop. If you require values in a different range (perhaps numbers between 100 and 1000), its just a matter of changing the values in the <strong>randint</strong> function.</p>
+<p>The generated list can be displayed as follows:</p>
+<pre><code>    from random import randint
+
+    numbers = []
+    counter = 0
+    while (counter &lt; 20):
+        num = randint(1, 99)
+        numbers.append(num)
+        counter += 1
+
+    print(numbers)</code></pre>
+<p>The output generated will look something like this (of course, your list will look different):</p>
+<p><code>[82, 17, 85, 8, 2, 7, 33, 13, 24, 89, 49, 37, 61, 72, 83, 39, 23, 58, 45, 31]</code></p>
+<p>You may wonder why we store a randomly generated integer in the variable num in the program above. It’s not used for anything other than being added to the list. In fact, the variable num is actually not necessary. The algorithm above can be modified without changing its behavior as follows:</p>
+<pre><code>    from random import randint
+    
+    numbers = []
+    counter = 0
+    while (counter &lt; 20):
+        numbers.append(randint(1, 99))
+        counter += 1
+    print(numbers)
+</code></pre>
+<p>The randomly generated integer is generated and immediately added to the list!</p>
+<p>As a last observation, it is often good practice to use constants to specify target or desired values. For example, using a constant to specify the list’s desired size can be useful. Any point in the program that needs the list’s target size can refer to the constant. If it needs to be changed at a later time, the constant value simply needs to be changed, and all references to it through the constant won’t have to also be updated. Here’s a modification of the above program that implements this:</p>
+<pre><code>    from random import randint
+    
+    SIZE = 20
+    numbers = []
+    counter = 0
+    while (counter &lt; SIZE):
+        numbers.append(randint(1, 99))
+        counter += 1
+    print(numbers)
+
+</code></pre>
+<p>Finally, recall that one of the list methods shown above returns the list’s size. We can use it instead of a counter to repeatedly insert integers into the list until it has reached the desired size:</p>
+<pre><code>    from random import randint
+    
+    SIZE = 20
+    numbers = []
+    while (len(numbers) &lt; SIZE):
+        numbers.append(randint(1, 99))
+    print(numbers)
+</code></pre>
+<p>Note that all statements referring to the variable counter have been removed. As integers are inserted into the list, its length increases. Therefore, len(numbers), initially 0, increases by one each time an integer is inserted into the list. Eventually, len(numbers) will be 20, and control will continue past the while loop.</p>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="the-python-for-loop" class="level1">
+<h1>The Python for loop</h1>
+<p>Python provides one more repetition construct called the <strong>for</strong> loop. Typically, while loops are considered to be sentinel-driven. That is, they require a condition to either be true or false that indicates execution of the statements in the loop. Recall that Scratch also had a <strong>repeat-n</strong> block that repeated a task a set (or fixed) number of times. This kind of loop can be implemented in Python using the for loop construct.</p>
+<p>The structure of a for loop in Python is:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> iterating_variable <span class="kw">in</span> sequence:</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    loop_body</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here’s an example that uses the for loop on a list:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="bu">list</span> <span class="op">=</span> [ <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span> ]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="cf">for</span> list_item <span class="kw">in</span> <span class="bu">list</span>:</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Current list item: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(list_item))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>Current <span class="bu">list</span> item: <span class="dv">2</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>Current <span class="bu">list</span> item: <span class="dv">4</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>Current <span class="bu">list</span> item: <span class="dv">6</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>Current <span class="bu">list</span> item: <span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The variable <code>list_item</code> is used as an iterator. That is, it takes on the value of each item in the list at each iteration of the for loop. The first time, <code>list_item</code> takes on the first item in the list, 2. The second time, it takes on the second item in the list, 4. Eventually, it takes on the last time in the list, 8. In total, the body of the for loop executes once for each item in the list (or four times).</p>
+<p>The for loop is actually quite powerful and flexible. It can, for example, iterate through the letters of a string:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="cf">for</span> letter <span class="kw">in</span> <span class="st">"Hello world!"</span>:</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Current letter: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(letter))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>Current letter: H</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>Current letter: e</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>Current letter: l</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>Current letter: l</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>Current letter: o</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>Current letter: </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>Current letter: w</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>Current letter: o</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>Current letter: r</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>Current letter: l</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>Current letter: d</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>Current letter: <span class="op">!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Typically, for loops iterate through a counter. The counter can then be used to refer to a variety of things, including the index of the elements of a list. To structure a for loop such that it iterates, say from 0 through 8, we would use the built-in Python function, <code>range()</code>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">9</span>):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Current iteration: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(i))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>Current iteration: <span class="dv">0</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>Current iteration: <span class="dv">1</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>Current iteration: <span class="dv">2</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>Current iteration: <span class="dv">3</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>Current iteration: <span class="dv">4</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>Current iteration: <span class="dv">5</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>Current iteration: <span class="dv">6</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>Current iteration: <span class="dv">7</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>Current iteration: <span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The range() function typically takes two parameters: a start value and a stop value. The start value is included in the range; however, the stop value is not. For example, to iterate from -10 to 10:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that an optional third parameter can be specified to indicate a step value. For example, suppose that you wish to iterate from 0 to 100 in increments of 10 (i.e., 0, 10, 20, …, 90, 100):</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">101</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>More on the for loop will be discussed later.</p>
+<p>Now that we have a list populated with random values, we can implement the sequential search to find the largest value in the list!</p>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity 2: Sequential search of the largest value in an array ">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Activity 2: Sequential search of the largest value in an array
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This activity involves implementing a sequential search on the list that was created in the first activity. We will use the sequential search to find the <strong>largest</strong> value in the list. We need to use our knowledge of the sequential search algorithm to implement it using the tools available to us in Python.</p>
+<p>Just to jog your memory, the sequential search algorithm begins by assuming that the largest value is the value stored in the first position of the list. We then check through every position, one by one, to see if there is a value greater than what is currently stored as largest. If a larger value is found, then the largest is replaced with the value in the current position. Otherwise, we just move on to the next position. This process is repeated until the end of the list is reached.</p>
+<p>The first thing to do is to create a variable called <strong>largest</strong> and assign it the value in the first position of the list:</p>
+<pre><code>        largest = numbers[0]</code></pre>
+<p>Now that we have initialized the variable <strong>largest</strong>, we need to compare it with each value in the list. This sounds like we’ll need another loop construct (to do the comparison 20 times: one comparison for each of the values in the list). Technically, we really only need to do the comparison 19 times: one comparison for each of the remaining values in the list. Let’s use a <strong>for</strong> loop for this.</p>
+<p>Recall that the sequential search algorithm dictates that if the value we are comparing with in the list is greater than <strong>largest</strong>, then we change the value of <strong>largest</strong> to store the current value in the list. We then keep on comparing it with the remaining values in the list.</p>
+<p>To compare the variable <strong>largest</strong> with individual elements in the list, we will need to know the indexes of each of the values in the list. That is, we will need to start with the second index (why not the first?), compare it with largest, go to the third, and so on. The strategy will be to use a counter to iterate through the range of indexes in the list and update the variable largest as necessary. Recall that the first index in the list is 0. Since we assume that the largest value is currently there, we can begin searching at index 1:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>largest <span class="op">=</span> numbers[<span class="dv">0</span>]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">20</span>):</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (numbers[index] <span class="op">&gt;</span> largest):</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        largest <span class="op">=</span> numbers[index]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The function <strong>range(1, 20)</strong> generates the sequence 1 through 19 that the variable <strong>index</strong> will iterate through (i.e., take on the value 1, followed by 2, and so on). We can therefore use the variable <strong>index</strong> to refer to specific locations in the list and access each element in the list. The benefit of using a variable instead of an explicit number is that a variable can change at any point in our algorithm.</p>
+<p>The last step is to display the largest value:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>largest <span class="op">=</span> numbers[<span class="dv">0</span>]</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">20</span>):</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (numbers[index] <span class="op">&gt;</span> largest):</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        largest <span class="op">=</span> numbers[index]</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(largest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Perhaps a more meaningful output statement is better:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>largest <span class="op">=</span> numbers[<span class="dv">0</span>]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">20</span>):</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (numbers[index] <span class="op">&gt;</span> largest):</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        largest <span class="op">=</span> numbers[index]</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The largest value is: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(largest))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The entire program, including generating the list, is shown here for completeness:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> randint</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>numbers <span class="op">=</span> []</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="bu">len</span>(numbers) <span class="op">&lt;</span> <span class="dv">20</span>):</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    numbers.append(randint(<span class="dv">1</span>, <span class="dv">99</span>))</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(numbers)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>largest <span class="op">=</span> numbers[<span class="dv">0</span>]</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">20</span>):</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (numbers[index] <span class="op">&gt;</span> largest):</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>        largest <span class="op">=</span> numbers[index]</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The largest value is: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(largest))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity 3: Selection sort of an array ">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Activity 3: Selection sort of an array
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For this activity, you will need a list of 20 random integers from 1 to 100. Refer to the Python code in the activities above if necessary.</p>
+<p>Now, let’s implement the selection sort. First, let’s look back at the pseudocode for the algorithm:</p>
+<pre><code>    1: n ← length of the list
+    2: for i ← 0..n-1
+    3:          minPosition ← i
+    4:          for j ← i+1..n
+    5:              if item at j &lt; item at minPosition
+    6:              then
+    7:                  minPosition ← j
+    8:              end
+    9:          next
+   10:          swap items at i and minPosition
+   11: next</code></pre>
+<p>The selection sort works by building a sorted list from left-to-right. Initially, the smallest value is located in the list and swapped with the first item in the list. The sort repeats this process with the next unsorted element (i.e., the first item in the unsorted portion of the list). Each iteration, a minPosition is updated that reflects the position (or index) of the smallest value in the list so far. Once the entire list has been searched through, a swap is made (swapping this minimum value with the first value in the unsorted portion of the list). Here is the selection sort in Python (using the list <strong>numbers</strong> generated above):</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(numbers)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    minPosition <span class="op">=</span> i</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, n):</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (numbers[j] <span class="op">&lt;</span> numbers[minPosition]):</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>            minPosition <span class="op">=</span> j</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    temp <span class="op">=</span> numbers[i]</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    numbers[i] <span class="op">=</span> numbers[minPosition]</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    numbers[minPosition] <span class="op">=</span> temp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice how the values at indexes i and minPosition of the list are swapped. A <strong>temporary</strong> variable is used to store on of the values, thereby allowing that value to be overwritten with the one to be swapped with. In other words, to swap two values, x and y, we temporarily store x, overwrite x with y, and overwrite y with the temporarily stored x (i.e., <code>temp = x, x = y, y = temp</code>).</p>
+<p>Let’s break the algorithm down, step-by-step. The first statement is pretty evident and is easily translated to Python:<code>n ← length of the list</code> becomes <code>n = len(numbers)</code>.</p>
+<p>The selection sort makes use of two loops, one inside the other. The outer loop controls the number of passes made through the list, each time placing the next smallest value in the list. The inner loop finds the next smallest value by comparing each value in the list to the current minimum.</p>
+<pre><code> 2: for i ← 0..n-1
+ 3: minPosition ← i
+ 4: for j ← i+1..n
+ 5: if item at j &lt; item at minPosition
+ 6: then
+ 7: minPosition ← j
+ 8: end
+ 9: next
+10: swap items at i and minPosition
+11: next</code></pre>
+<p>It’s very clear where both for loops are in the Python code:</p>
+<pre><code>for i in range(0, n - 1):
+    minPosition = i
+
+     for j in range(i + 1, n):
+         if (numbers[j] &lt; numbers[minPosition]):
+            minPosition = j
+
+    temp = numbers[i]
+    numbers[i] = numbers[minPosition]
+    numbers[minPosition] = temp</code></pre>
+<p>In fact, the pseudocode and Python code are nearly identical! The initialization of minPosition to i is almost the same: minPosition ← i becomes minPosition = i.</p>
+<p>The if statement in the inner loop looks slightly different; however, that’s just because of how list items are accessed in Python: using an index enclosed in square brackets. The relevant pseudocode is:</p>
+<pre><code> 5: if item at j &lt; item at minPosition
+ 6: then
+ 7: minPosition ← j
+ 8: end</code></pre>
+<p>And in Python:</p>
+<pre><code>if (numbers[j] &lt; numbers[minPosition]):
+    minPosition = j</code></pre>
+<p>As mentioned earlier, swapping is typically done by declaring a temporary variable, assigning it one of the two values to be swapped, and then performing successive assignments. Therefore, although the following pseudocode is nice and meaningful, it is not directly translatable to Python:</p>
+<pre><code>swap items at i and minPosition</code></pre>
+<p>Instead, we use successive assignment statements:</p>
+<pre><code>temp = numbers[i]
+numbers[i] = numbers[minPosition]
+numbers[minPosition] = temp</code></pre>
+<p>The selection sort algorithm in Python stores the value at index i of the list in a temporary variable (temp). It then replaces the item at index i of the list with the item at minPosition. Finally, it replaces the item at index minPosition of the list with temp (the item that used to be at index i of the list).</p>
+</div>
+</div>
+</div>
+<p>Now that we have implemented the selection sort, we can sort any array of values! And now that we have a sorted array, we can implement a more efficient search than the sequential search. Recall that there exists a more efficient search that only works on sorted data: the binary search. Let’s try to implement it now in the next activity.</p>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity 4: Binary search for a specific value in an array ">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Activity 4: Binary search for a specific value in an array
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For this activity, we assume that you have declared and randomly populated a list of values (called numbers), and that you have also sorted this list using the selection sort implemented in the previous activity.</p>
+<p>Let’s begin by recalling the pseudocode for the binary search as shown in a previous lesson:</p>
+<pre><code> 1: repeat
+ 2: n ← number of items in the current portion of the list
+ 3: mid ← floor(n / 2) + 1
+ 4: guess mid
+ 5: if response is HIGHER
+ 6: then
+ 7: discard the left half of the list
+ 8: else if response is LOWER
+ 9: then
+10: discard the right half of the list
+11: end
+12: until guess is correct
+</code></pre>
+<p>Note that the repeat-until loop terminates when the guess is correct. This is because we tailored the binary search to the number guessing game (which means that, eventually, the number will be found). We need to generalize the algorithm so that it can work on an arbitrary list of values, whether the specified value is found in it or not. Try to rewrite the algorithm so that it works for an arbitrary list.</p>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity ">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Try to rewrite the algorithm so that it works for an arbitrary list.</p>
+</div>
+</div>
+</div>
+<p>This new version works by finding the middle value in the list. It then compares the value to search for with this middle value. If they match, then the search is finished! Otherwise, the left or right half of the list is discarded, depending on the result of the comparison. This continues, either until the value is found, or until the entire list has been searched (and the value was not found).</p>
+<p>Generally, it’s not a good idea to actually remove values from a list when performing a search. We can tweak the algorithm a bit to maintain the list’s integrity by keeping track of the “beginning” and “end” of the <strong>valid</strong> portion of the list. That is, if we wish to “discard” the left half of the list, then the valid portion of the list is the <strong>right half</strong>: the beginning of the valid portion of the list is at the index directly to the right of the middle value, and the end of the valid portion of the list doesn’t change. And if we wish to “discard” the right half of the list, then the valid portion of the list is the <strong>left half</strong>: the beginning of the valid portion of the list doesn’t change, and the end of the valid portion of the list is at the index directly to the left of the middle value. Here’s a modified algorithm that implements this tweak:</p>
+<pre><code>    num ← number to search for
+    found ← false
+    first ← 0
+    last ← number of items in the list - 1
+    while first &lt;= last and found != true
+        mid ← floor((first + last) / 2)
+        if num = item at mid of the list
+        then
+            found ← true
+        else if num &gt; item at mid of the list
+        then
+            first ← mid + 1
+        else
+            last ← mid - 1
+        end
+    display found</code></pre>
+<p>If the desired value is found in the list, the search terminates. This occurs because the variable found is set to true when the value is found in the list, and the while loop’s condition requires found != false to continue the repetition. The while loop also terminates if the variables first and last shift sides (i.e., first represents an index in the list that is greater then or equal to last). This indicates the the desired value was not found in the list.</p>
+<p>Note how the variable mid is calculated: it is the average of the first and last indexes! The <strong>floor</strong> math function guarantees that the middle value is to the left of the center of the valid portion of the list, if the valid portion of the list has an <strong>even</strong> number of items.</p>
+<p>Here’s a Python implementation of the binary search:</p>
+<pre><code>    num = int(input("What integer would you like to search for? "))
+    found = False
+    first = 0
+    last = len(numbers) - 1
+
+    while (first &lt;= last and found != True):
+        mid = (first + last) // 2
+        if (num == numbers[mid]):
+            found = True
+        elif (num &gt; numbers[mid]):
+            first = mid + 1
+        else:
+            last = mid - 1
+    print(found)
+</code></pre>
+<p>First, the desired search value is obtained and stored into the variable num:</p>
+<pre><code>num = int(input("What integer would you like to search for? "))</code></pre>
+<p>Next, found is initialized to false, first to 0 (the first valid index in the list), and last to len(numbers) – 1 (the last valid index in the list):</p>
+<pre><code>    found = False
+    first = 0
+    last = len(numbers) - 1</code></pre>
+<p>The while loop is structured so that it iterates so long as first &lt;= last (i.e., the beginning and end of the valid portion of the list haven’t logically swapped) and found != True (i.e., the desired value hasn’t already been found):</p>
+<pre><code>while (first &lt;= last and found != True):</code></pre>
+<p>Next, the middle index of the valid position of the list is calculated as the average of first and last. Note the use of the // operator (which performs a floor division):</p>
+<pre><code> mid = (first + last) // 2</code></pre>
+<p>If the desired value is found at the index stored in mid, the found is set to true (which will terminate the while loop). If not, then either first or last is appropriately updated: if the desired value is greater than mid, then first is updated to mid + 1; if the desired value is less than mid, then last is updated to mid – 1.</p>
+<pre><code>    if (num == numbers[mid]):
+        found = True
+    elif (num &gt; numbers[mid]):
+        first = mid + 1
+    else:
+        last = mid - 1</code></pre>
+<p>To assure yourself that the loop will terminate if the desired value is not found by logically swapping the positions of first and last, let’s try a trivial example with a list of one item: [ 5 ].</p>
+<p>Running the binary search on this list initially sets found to false, first to 0, and last to 0 <code>(len(numbers) – 1 = 1 – 1 = 0)</code>. At this point, first is indeed less than or equal to last (actually first == last). Moreover, found != true. Therefore, mid is calculated to be <span class="math inline">\((0 + 0) // 2 = 0 // 2 = 0\)</span></p>
+<p>Suppose that we wish to search for the value 6 (which is not in the list). Therefore, num != numbers[mid]; however, num &gt; numbers[mid] (i.e., 6 &gt; 5). This results in first being updated to 1: mid + 1 = 0 + 1 = 1. When the condition in the while loop is reevaluated, first is 1 and last is 0! The values have logically swapped (i.e., how can first be greater than last?). Therefore, the while loop terminates, and the variable found is never being changed from its initialized value of false.</p>
+<p>How could the algorithm be modified so that the output is more meaningful? That is, if the desired value is found, additionally display its index in the list. A possible solution is:</p>
+<pre><code>num = int(input("What integer would you like to search for? "))
+found = False
+first = 0
+last = len(numbers) - 1
+
+while (first &lt;= last and found != True):
+    mid = (first + last) // 2
+    if (num == numbers[mid]):
+        found = True
+    elif (num &gt; numbers[mid]):
+        first = mid + 1
+    else:
+        last = mid - 1
+if (found):
+    print("{} was found at index {}!".format(num, mid))
+else:
+    print("{} was not found.".format(num))</code></pre>
+<p>The reason that mid can be used to provide the index of the desired (and found) value in the list, is that it is not recalculated when found is set to true. That is, its last calculated value is preserved (which is the last calculated middle of the valid portion of the list – where the desired value was found).</p>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
