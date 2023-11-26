@@ -81,18 +81,21 @@ The algorithm described in the activity above can be represented more generally 
 
 This algorithm searches for (and displays) the largest value in a list of numbers. How could it be modified to search for (and display) the smallest value in a list of numbers? 
 
+::: {.callout-important title="Activity " collapse="false" icon=false}
 
-Try to modify the algorithm above in the space below:
+Try to modify the algorithm above:
 
-![](images\img6 (2).png){  width=700px }
+:::
 
 
 
 The sequential search can also be used to find a specific value (such as 100) instead of something more general as we did above (such as the maximum value). How could the algorithm that finds the maximum value be modified to search for a specified value and display whether it was found (or not)? 
 
-Try to modify the algorithm above in the space below:
+::: {.callout-important title="Activity " collapse="false" icon=false}
 
-![](images\img6 (3).png){  width=700px }
+Try to modify the algorithm above:
+
+:::
 
 
 Is this algorithm efficient? What happens if the value searched for is not in the list? What happens if the value searched for is near the beginning of the list? We observe that, if the value searched for is near the beginning of the list, the algorithm sets the variable found to true but continues to look through the remainder of the list. This is not very efficient. Consider a list of 1 million values such that the value searched for happens to be found at the beginning of the list. The algorithm above would absolutely find the value at the beginning of the list; however, it would then continue to needlessly search through the remaining 999,999 values in the list. There is no stop condition in the case that the value searched for is found. We can fix this quite easily, however, by slightly modifying the algorithm:
@@ -154,6 +157,8 @@ A method that may be better suited for computing is to open the phone book in th
 This strategy can be used to guess a number from one to 1,000 much more efficiently than by doing a sequential search. So how is the halfway point (or middle value) calculated? Given a list of n items, we calculate the middle as follows:
 
 $$ ⌊\frac{n}{2}⌋+1 $$
+ $$\left\lceil \frac{n}{2} \right\rceil$$
+ 
 
 Note that the brackets represent the floor function which means to round down to the largest previous integer. For example, the floor of 3.14 is 3, and the floor of 27.9 is 27. For an odd number of values, this selects the middle value (i.e., there are an equal number of values on either side of the selected value). For an even number of values, this selects the value to the right of the “middle” (i.e., there is one more value to the left of the selected value than there are to the right). The following simpler formula 
 may, at first, seem equivalent:
@@ -338,9 +343,12 @@ Again, we can show how the selection sort works by summarizing each pass in a si
 
 ![](images\img6 (16).png){ fig-align="center" width=200px }
 
-This is sufficient to show how the selection sort works. Can you design an algorithm in pseudocode for the selection sort? Try it in the space below:
+::: {.callout-important title="Activity " collapse="false" icon=false}
 
-![](images\img6 (17).png){  width=700px }
+This is sufficient to show how the selection sort works.Can you design an algorithm in pseudocode for the selection sort? 
+:::
+
+
 
 ::: {.callout-tip title="Did you know?" }
 Note the **for-next** construct in the pseudocode for the selection sort above. It is used to repeat a fixed or known number of times. You have already seen the **repeat-until** construct that repeats until some condition is true. A for-next construct can be rewritten into a repeat-until construct as follows:
@@ -368,9 +376,13 @@ It is not always possible to rewrite a repeat-until construct into a for-next co
 In this case, there is no way of knowing when the list will be empty if we don't originally know the length of the list (as assumed).
 :::
 
+::: {.callout-important title="Activity " collapse="false" icon=false}
+
 Show how the selection sort works on the list [9 1 2 5 3 7] by completing the table below:
 
 ![](images\img6 (18).png){ fig-align="center" width=200px }
+
+:::
 
 
 

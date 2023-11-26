@@ -326,7 +326,7 @@ intermediate gate outputs as follows (where Z is the output of A or B, and Z' is
 
 ![](images\img5 (18).png){ fig-align="center" width=200px }
 
-
+::: {.callout-important title="Activity " collapse="true" icon=false}
 Can you fill in the truth table for the circuit below? Let Z represent the output of A and B, and Z'
 represent the output of Z or C.
 
@@ -334,6 +334,8 @@ represent the output of Z or C.
 
 
 ![](images\img5 (20).png){ fig-align="center" width=200px }
+
+:::
 
 
 # Boolean algebra
@@ -366,12 +368,14 @@ the second, A and B are fed into an or gate, with the result being combined with
 As you may be beginning to suspect, there is a direct correspondence between Boolean expressions and
 logic circuits. Every logic circuit that can ever be constructed will have a corresponding Boolean
 expression, and every valid Boolean expression that can ever be written maps to an equivalent logic
-circuit. The process of converting between the two representations is quite mechanical: simply use the substitutions above, being sure to parenthesize Boolean expressions in a manner that preserves which
-operators go with which operands.
+circuit. The process of converting between the two representations is quite mechanical: simply use the substitutions above, being sure to parenthesize Boolean expressions in a manner that preserves which operators go with which operands.
 
-Try to write the Boolean expression corresponding to the following circuit in the space below:
+::: {.callout-important title="Activity " collapse="true" icon=false}
+Try to write the Boolean expression corresponding to the following circuit :
 
-![](images\img5 (22).png){ fig-align="center" width=350px }
+![](images\img5 (22).png){ width=550px }
+:::
+
 
 Boolean algebra provides computer scientists and engineers a powerful tool for concisely representing
 circuits and reasoning about their behavior. While the details are beyond the scope of this lesson,
@@ -584,23 +588,18 @@ the truth table for the one-bit comparator for less than (i.e., A < B):
 
 ![](images\img5 (38).png){ fig-align="center" width=150px }
 
+::: {.callout-important title="Activity " collapse="false" icon=false}
 Can you come up with the circuit for this logic in the space below? Here's an example circuit:
-
-|
-
-.
-
-|
-
-.
+:::
 
 
-
+::: {.callout-important title="Activity " collapse="false" icon=false}
 Can you complete the truth table for the greater than comparator (i.e., A > B)?
 
 ![](images\img5 (39).png){ fig-align="center" width=150px }
 
+:::
 
-
-Can you come up with the circuit for this logic in the space below? Here's an example circuit:
-
+::: {.callout-important title="Activity " collapse="false" icon=false}
+Can you come up with the circuit for this logic in the space below?
+:::

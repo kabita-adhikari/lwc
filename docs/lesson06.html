@@ -176,11 +176,39 @@ Definition
     9: until i = the length of the list
     10: display max</code></pre>
 <p>This algorithm searches for (and displays) the largest value in a list of numbers. How could it be modified to search for (and display) the smallest value in a list of numbers?</p>
-<p>Try to modify the algorithm above in the space below:</p>
-<p><img src="images\img6 (2).png" class="img-fluid" width="700"></p>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity ">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Try to modify the algorithm above:</p>
+</div>
+</div>
+</div>
 <p>The sequential search can also be used to find a specific value (such as 100) instead of something more general as we did above (such as the maximum value). How could the algorithm that finds the maximum value be modified to search for a specified value and display whether it was found (or not)?</p>
-<p>Try to modify the algorithm above in the space below:</p>
-<p><img src="images\img6 (3).png" class="img-fluid" width="700"></p>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity ">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Try to modify the algorithm above:</p>
+</div>
+</div>
+</div>
 <p>Is this algorithm efficient? What happens if the value searched for is not in the list? What happens if the value searched for is near the beginning of the list? We observe that, if the value searched for is near the beginning of the list, the algorithm sets the variable found to true but continues to look through the remainder of the list. This is not very efficient. Consider a list of 1 million values such that the value searched for happens to be found at the beginning of the list. The algorithm above would absolutely find the value at the beginning of the list; however, it would then continue to needlessly search through the remaining 999,999 values in the list. There is no stop condition in the case that the value searched for is found. We can fix this quite easily, however, by slightly modifying the algorithm:</p>
 <pre><code>    1:n ← value to search for
     2: i ← 1
@@ -213,7 +241,7 @@ Definition
 <p>Consider the normal approach to searching a phone book for a phone number that corresponds to a given name. A sequential search would require starting the search at the beginning of the phone book and continue until either the name is found or until the entire phone book is exhausted. However, a phone book has a specific quality that can be taken advantage of which makes searching significantly easier and faster: it is ordered in a meaningful way. The names in a phone book are arranged in alphabetical order. This makes searching easier in that only a small subset of the names have to actually be searched through. When searching through a phone book, the usual process is to thumb through it until the first letter of the given name is reached. From there, a sequential search (of sorts) is performed to search for the given name.</p>
 <p>A method that may be better suited for computing is to open the phone book in the middle. If the given name starts with a letter in the alphabet that comes before the one that is there, then the right half of the phone book can be ignored. With a single comparison, half of the phone book has been eliminated. This strategy can be continued by shifting to the part of the phone book that represents the halfway point in the first half of the phone book. Another comparison is performed to determine if the given name appears before or after this point. This continues until the given name is found. With each check, half of the remaining portion is eliminated.</p>
 <p>This strategy can be used to guess a number from one to 1,000 much more efficiently than by doing a sequential search. So how is the halfway point (or middle value) calculated? Given a list of n items, we calculate the middle as follows:</p>
-<p><span class="math display">\[ ⌊\frac{n}{2}⌋+1 \]</span></p>
+<p><span class="math display">\[ ⌊\frac{n}{2}⌋+1 \]</span> <span class="math display">\[\left\lceil \frac{n}{2} \right\rceil\]</span></p>
 <p>Note that the brackets represent the floor function which means to round down to the largest previous integer. For example, the floor of 3.14 is 3, and the floor of 27.9 is 27. For an odd number of values, this selects the middle value (i.e., there are an equal number of values on either side of the selected value). For an even number of values, this selects the value to the right of the “middle” (i.e., there is one more value to the left of the selected value than there are to the right). The following simpler formula may, at first, seem equivalent: <span class="math display">\[⌈\frac{n}{2}⌉\]</span></p>
 <p>Indeed, it is for odd values of n; e.g., for n=5 <span class="math display">\[ ⌊\frac{5}{2}⌋+1=⌊2.5 ⌋+1=2+1=3 \]</span> <span class="math display">\[⌈\frac{5}{2}⌉=⌈2.5⌉=3 \]</span></p>
 <p>However, it is not equivalent for even values of n; e.g., for n=6: <span class="math display">\[ ⌊\frac{6}{2}⌋+1=⌊3⌋+1=3+1=4 \]</span> <span class="math display">\[⌈\frac{6}{2}⌉=⌈3⌉=3 \]</span></p>
@@ -353,8 +381,22 @@ Did you know?
 <p><img src="images\img6 (16).png" class="img-fluid figure-img" width="200"></p>
 </figure>
 </div>
-<p>This is sufficient to show how the selection sort works. Can you design an algorithm in pseudocode for the selection sort? Try it in the space below:</p>
-<p><img src="images\img6 (17).png" class="img-fluid" width="700"></p>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity ">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This is sufficient to show how the selection sort works.Can you design an algorithm in pseudocode for the selection sort?</p>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Did you know?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -384,11 +426,26 @@ The repeat-until version:
 <p>In this case, there is no way of knowing when the list will be empty if we don’t originally know the length of the list (as assumed).</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Activity ">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Activity
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
 <p>Show how the selection sort works on the list [9 1 2 5 3 7] by completing the table below:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images\img6 (18).png" class="img-fluid figure-img" width="200"></p>
 </figure>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="insertion-sort" class="level1">
