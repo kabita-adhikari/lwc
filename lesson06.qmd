@@ -58,7 +58,7 @@ Note that the algorithm works regardless of the arrangement of the memory studen
 
 :::
 
-# Sequential search
+## Sequential search
 The activity above was a demonstration of the sequential search. Sequential searching has a lot of applications in computer science.
 
 ::: {.callout-tip title="Definition" }
@@ -144,7 +144,7 @@ number from one to 1,000; the other student (called the guesser) will attempt to
 
 Each group of students should design an algorithm to correctly **guess** the number picked by the picker. Record the number of guesses that it took to guess correctly. Then switch places: the picker becomes the guesser and vice versa.
 
-# Binary search
+## Binary search
 Some of you may have realized that the runtime of a sequential search is dependent on the size of the list that is being searched. Sequentially searching through a list of 1,000 items (as in the activity above) will typically take ten times as long as searching through a list of 100 items (i.e., 100 is one-tenth of 1,000). In the best case, the item will be found at the beginning of the list (i.e., it requires searching through only
 one item). In the worst case, the item will be found at the end of the list or not found at all (i.e., it requires searching through the entire list). On average, the algorithm would have to search through about half of the list.
 
@@ -156,24 +156,24 @@ A method that may be better suited for computing is to open the phone book in th
 
 This strategy can be used to guess a number from one to 1,000 much more efficiently than by doing a sequential search. So how is the halfway point (or middle value) calculated? Given a list of n items, we calculate the middle as follows:
 
-$$ ⌊\frac{n}{2}⌋+1 $$
- $$\left\lceil \frac{n}{2} \right\rceil$$
- 
+
+$$ \left\lfloor \frac{n}{2} \right\rfloor +1  $$
+
 
 Note that the brackets represent the floor function which means to round down to the largest previous integer. For example, the floor of 3.14 is 3, and the floor of 27.9 is 27. For an odd number of values, this selects the middle value (i.e., there are an equal number of values on either side of the selected value). For an even number of values, this selects the value to the right of the “middle” (i.e., there is one more value to the left of the selected value than there are to the right). The following simpler formula 
 may, at first, seem equivalent:
-$$⌈\frac{n}{2}⌉$$
+$$\left\lceil \frac{n}{2} \right\rceil$$
 
 
 
 Indeed, it is for odd values of n; e.g., for n=5
-$$ ⌊\frac{5}{2}⌋+1=⌊2.5 ⌋+1=2+1=3 $$
-$$⌈\frac{5}{2}⌉=⌈2.5⌉=3 $$
+$$ \left\lfloor \frac{5}{2}\right\rfloor+1=⌊2.5 ⌋+1=2+1=3 $$
+$$\left\lceil \frac{5}{2}\right\rceil=⌈2.5⌉=3 $$
 
 
 However, it is not equivalent for even values of n; e.g., for n=6:
-$$ ⌊\frac{6}{2}⌋+1=⌊3⌋+1=3+1=4 $$
-$$⌈\frac{6}{2}⌉=⌈3⌉=3 $$
+$$ \left\lfloor \frac{6}{2}\right\rfloor+1=⌊3⌋+1=3+1=4 $$
+$$\left\lceil \frac{6}{2}\right\rceil=⌈3⌉=3 $$
 
 
 Some of you may have naturally implemented this algorithm in the activity above. Let's formally define it now in pseudocode:
@@ -252,8 +252,7 @@ The following table shows the number of comparisons required to search through a
 ![](images\img6 (9).png){  width=500px }
 
 
-For a list of 1,000 items, the binary search is roughly 50 times faster than the sequential search, and for a list of 10,000 items, the binary search is roughly 357 times faster. This, however, does not take into consideration that the binary search takes extra calculations (i.e., calculating the middle of the current portion of the list, discarding half of the list, etc). However, suppose that each binary search comparison
-takes 1/10 of a second and each sequential search comparison takes 1/1000 of a second. We can still observe that the binary search ridiculously outperforms the sequential search as illustrated in Figure 1.
+For a list of 1,000 items, the binary search is roughly 50 times faster than the sequential search, and for a list of 10,000 items, the binary search is roughly 357 times faster. This, however, does not take into consideration that the binary search takes extra calculations (i.e., calculating the middle of the current portion of the list, discarding half of the list, etc). However, suppose that each binary search comparison takes 1/10 of a second and each sequential search comparison takes 1/1000 of a second. We can still observe that the binary search ridiculously outperforms the sequential search as illustrated in Figure 1.
 
 Also note that the time it takes to initially order the list of numbers is not considered. Since the binary search requires the list to be ordered, it is worthwhile to investigate various ordering methods and their performance.
 
@@ -276,7 +275,7 @@ the sort procedure.
 
 The take home message is not to place too much emphasis on the numbers that will be generated for predicted runtimes as they are highly dependent on the assumptions made concerning computing hardware. Instead, what is important is the relative performance of the algorithms, which is not affected by underlying hardware assumptions.
 
-# Bubble sort
+## Bubble sort
 The bubble sort processes a list of items from left-to-right. The sorted list is built, in place, from right-to-left; that is, the largest value in the list is placed in its final position first, and so on, in the same list. It works by repeatedly comparing two neighboring elements (i.e., in positions i and i+1).If the two neighboring elements are out of order, they are swapped. The algorithm advances the position i and repeats. If, at the end of one iteration of the entire list (also called a **pass**) any swaps were made, the Figure 1: Runtime comparison of sequential and binary search process is repeated. If no swaps were made, it means the list is sorted, and the process terminates. The following is an example of the bubble sort on the list [7 9 3 5 1], with the underlined elements showing where the comparisons are made in each pass and red indicating the sorted portion of the list:
 
 ![](images\img6 (10).png){ fig-align="center" width=300px }
@@ -308,14 +307,14 @@ The method illustrated on the sort the list [7 9 3 5 1] in the table above is gr
 
 ![](images\img6 (12).png){ fig-align="center" width=200px }
 
-
+::: {.callout-important title="Activity " collapse="true" icon=false}
 Show how the bubble sort works on the list [9 1 2 5 3 7] by completing the table below:
 
 ![](images\img6 (13).png){ fig-align="center" width=200px }
 
+:::
 
-
-# Selection sort
+## Selection sort
 The selection sort is probably the most natural approach to sorting. Most people would likely come up with this algorithm when asked to design one that, for example, reorders a line of people based on their height. The selection sort processes a list of items from left-to-right. The sorted list is also built, in place, from left-to-right; that is, the smallest value in the list is placed in its final position first, and so on. Since the list is sorted in place, we keep track of both an unsorted portion and a sorted portion. And since the list is built from left-to-right, then the sorted portion is on the left. The selection sort works by repeatedly finding the smallest value in the unsorted portion of the list and swapping it with the first value in the unsorted portion. This action increases the sorted portion of the list and shrinks the unsorted portion of the list by one value. This is repeated until there are no values in the unsorted portion of the 
 list.
 
@@ -388,7 +387,7 @@ Show how the selection sort works on the list [9 1 2 5 3 7] by completing the ta
 
 
 
-# Insertion sort
+## Insertion sort
 The insertion sort is the procedure that most people use to arrange a hand of cards. To begin to understand the algorithm, think of the list as having both a sorted portion and an unsorted portion (as we did in the previous sorts). The first item of the list is considered to be a sorted list one item long, with the rest of the list (items 2 through n) forming an unsorted portion. 
 
 The insertion sort removes the first item from the unsorted portion of the list and marks it as the item to be inserted. It then works its way from the back to the front of the sorted portion of the list, at each step comparing the item to be inserted with the current item. As long as the current item is larger than the item to be inserted, the algorithm continues moving backward through the sorted portion of the list. Eventually it will either reach the beginning of the sorted portion of the list or encounter an item that is less than or equal to the item to be inserted. When that happens the algorithm inserts the item at the current insertion point.
@@ -407,11 +406,12 @@ Again, we can show how the insertion sort works by summarizing each pass in a si
 ![](images\img6 (20).png){ fig-align="center" width=200px }
 
 
+::: {.callout-important title="Activity " collapse="true" icon=false}
 
 Show how the insertion sort works on the list [9 1 2 5 3 7] by completing the table below:
 
 ![](images\img6 (21).png){ fig-align="center" width=200px }
-
+:::
 
 
 
@@ -451,7 +451,7 @@ $$\frac{1}{4}(5^2−5) =\frac{1}{4}(20) = 5$$
 
 To summarize, an insertion sort of n items always requires exactly n-1 passes through the sorted portion of the list. What varies is the number of comparisons that must be performed per pass. The best case requires only one comparison per pass and occurs when attempting to sort a list that is already sorted. The worst case requires an average of n/2 comparisons per pass and occurs when the list is already sorted in reverse order. In the average case, only one half of the items in the sorted portion of the list will be examined during each pass before the insertion point is found – giving n/4 comparisons per pass.
 
-# Comparing sorts
+## Comparing sorts
 When comparing the insertion sort to other sorts, generally the average case formula is used since this represents the expected performance of the algorithm. Occasionally, knowledge of the worst case behavior of the algorithm is also important. Understanding this behavior is useful when attempting to determine or limit the maximum amount of time a computing system will take to reach an answer, even in the worst case. Such behavior is important in real time applications such as airplane flight control systems.
 The bubble sort and the selection sort always require exactly $1/2(n^2-n)$ comparisons to sort n items. In the worst case, the insertion sort also requires $1/2(n^2-n)$ comparisons. In the average (expected) case, however, the insertion sort requires 
 $1/4(n^2-n)$ comparisons, and therefore requires about one half of the 
